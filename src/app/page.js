@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from './page.module.css';
 import icon from './icon.png';
+import heroImage from '../../public/images/multizer-hero-infrastructure.png';
 
 const services = [
   {
@@ -102,6 +103,38 @@ const services = [
   },
 ];
 
+const coreSolutions = [
+  {
+    label: 'Operate',
+    title: 'Managed IT Operations',
+    outcome: 'Keep your team productive.',
+    description: 'We manage the systems behind your business with proactive support, resilient backups, and one accountable technical partner.',
+    features: ['System administration', 'Backup & disaster recovery', 'Rapid-response helpdesk'],
+    icon: services[0].icon,
+    tone: 'solutionOperate',
+  },
+  {
+    label: 'Build',
+    title: 'Digital Solutions',
+    outcome: 'Build around your workflow.',
+    description: 'Purpose-built software, cloud tools, and technology roadmaps designed around how your organization actually operates.',
+    features: ['Custom applications', 'Cloud collaboration', 'Technology planning'],
+    icon: services[1].icon,
+    tone: 'solutionBuild',
+  },
+  {
+    label: 'Secure',
+    title: 'Infrastructure & Security',
+    outcome: 'Protect every point of access.',
+    description: 'A coordinated security layer spanning your network, endpoints, premises, cameras, and physical access systems.',
+    features: ['Cybersecurity monitoring', 'Network & low-voltage cabling', 'CCTV & access control'],
+    icon: services[3].icon,
+    tone: 'solutionProtect',
+  },
+];
+
+const supportingServices = [services[2], services[4], services[5], services[6], services[7], services[8]];
+
 const process = [
   {
     step: '01',
@@ -135,6 +168,16 @@ const highlights = [
 export default function Home() {
   return (
     <main className={styles.container}>
+      <input type="checkbox" id="businessNotice" className={styles.noticeToggle} defaultChecked aria-hidden="true" />
+      <div className={styles.noticeOverlay} role="dialog" aria-modal="true" aria-labelledby="businessNoticeTitle">
+        <section className={styles.noticeDialog}>
+          <span className={styles.noticeBadge}>Notice</span>
+          <h2 id="businessNoticeTitle">Business operations are currently paused.</h2>
+          <p>We are temporarily not accepting new service requests or responding to inquiries.</p>
+          <label htmlFor="businessNotice" className={styles.noticeClose} aria-label="Close notice">OK</label>
+        </section>
+      </div>
+
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <a href="#top" className={styles.logo}>
@@ -161,17 +204,59 @@ export default function Home() {
       </header>
 
       <section id="top" className={styles.hero}>
-        <div className={styles.heroContent}>
-          <span className={styles.badge}>Established 2015 &middot; Small Business IT Partner</span>
-          <h1 className={styles.heroTitle}>The IT department your business doesn&apos;t have to hire.</h1>
-          <p className={styles.heroSubtitle}>
-            MULTIZER LLC delivers end-to-end system deployment, custom software, network infrastructure,
-            and physical security for small businesses — so you can stay focused on running yours.
-          </p>
-          <div className={styles.heroActions}>
-            <a href="#contact" className="btn btn-primary">Get a Free Consultation</a>
-            <a href="#services" className="btn btn-secondary">Explore Services</a>
+        <Image
+          src={heroImage}
+          alt=""
+          fill
+          priority
+          placeholder="blur"
+          sizes="100vw"
+          className={styles.heroImage}
+        />
+        <div className={styles.heroGrid} aria-hidden="true" />
+        <div className={styles.heroInner}>
+          <div className={styles.heroContent}>
+            <span className={styles.badge}><span></span> Established 2015 &middot; Small Business IT Partner</span>
+            <h1 className={styles.heroTitle}>Your business,<br /><em>securely connected.</em></h1>
+            <p className={styles.heroSubtitle}>
+              One accountable technology partner for managed IT, custom software, network infrastructure,
+              and physical security — so your team can keep moving forward.
+            </p>
+            <div className={styles.heroActions}>
+              <a href="#contact" className="btn btn-primary">Get a Free Consultation <span aria-hidden="true">→</span></a>
+              <a href="#services" className="btn btn-secondary">Explore Services</a>
+            </div>
+            <div className={styles.heroProof} aria-label="Service benefits">
+              <span>Proactive monitoring</span>
+              <span>Direct technician access</span>
+              <span>End-to-end coverage</span>
+            </div>
           </div>
+
+          <aside className={styles.statusPanel} aria-label="Managed systems status">
+            <div className={styles.statusHeader}>
+              <div>
+                <span className={styles.statusEyebrow}>MULTIZER CONTROL</span>
+                <strong>Systems overview</strong>
+              </div>
+              <span className={styles.liveStatus}><i></i> Operational</span>
+            </div>
+            <div className={styles.statusRows}>
+              <div><span>Network infrastructure</span><b>Protected</b></div>
+              <div><span>Cloud &amp; backups</span><b>Synced</b></div>
+              <div><span>Endpoint security</span><b>Monitored</b></div>
+              <div><span>Physical access</span><b>Online</b></div>
+            </div>
+            <div className={styles.signal} aria-hidden="true">
+              {[34, 54, 43, 70, 58, 82, 64, 88, 76, 94, 84, 100].map((height, index) => (
+                <span key={index} style={{ '--signal-height': `${height}%` }} />
+              ))}
+            </div>
+          </aside>
+        </div>
+        <div className={styles.scrollCue} aria-hidden="true">
+          <span>Explore</span>
+          <i></i>
         </div>
       </section>
 
@@ -222,29 +307,92 @@ export default function Home() {
             </ul>
           </div>
           <div className={styles.aboutImage}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="var(--white)" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-              <line x1="8" y1="21" x2="16" y2="21"></line>
-              <line x1="12" y1="17" x2="12" y2="21"></line>
-            </svg>
+            <div className={styles.aboutGlow} />
+            <span className={`${styles.archNode} ${styles.archCloud}`}>Cloud</span>
+            <span className={`${styles.archNode} ${styles.archNetwork}`}>Network</span>
+            <span className={`${styles.archNode} ${styles.archSecurity}`}>Security</span>
+            <span className={`${styles.archNode} ${styles.archSupport}`}>Support</span>
+            <div className={styles.archLines} aria-hidden="true" />
+            <div className={styles.archCore}>
+              <Image src={icon} alt="" height={54} width={54} />
+              <strong>One IT Partner</strong>
+              <span>Managed as one system</span>
+            </div>
+            <div className={styles.aboutCaption}>
+              <span>Connected operations</span>
+              <strong>Technology that works together.</strong>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="services" className={styles.sectionAlt}>
         <div className={styles.sectionInner}>
-          <span className={styles.eyebrow} style={{ textAlign: 'center', display: 'block' }}>What We Offer</span>
-          <h2 className={styles.sectionTitle}>Our Services</h2>
-          <p className={styles.sectionSubtitle}>End-to-end technology solutions to keep your business running securely and efficiently.</p>
+          <div className={styles.servicesIntro}>
+            <div>
+              <span className={styles.eyebrow}>What We Offer</span>
+              <h2>One partner for every layer of your technology.</h2>
+            </div>
+            <div className={styles.servicesIntroCopy}>
+              <span>9 capabilities &middot; 1 accountable team</span>
+              <p>From everyday support to critical infrastructure, we plan, build, protect, and manage your technology as one connected system.</p>
+            </div>
+          </div>
+
+          <div className={styles.solutionGrid}>
+            {coreSolutions.map((solution, index) => (
+              <article className={`${styles.solutionCard} ${styles[solution.tone]}`} key={solution.title}>
+                <div className={styles.solutionTopline}>
+                  <span className={styles.solutionLabel}>{solution.label}</span>
+                  <span className={styles.solutionNumber}>0{index + 1}</span>
+                </div>
+                <div className={styles.solutionIcon}>{solution.icon}</div>
+                <p className={styles.solutionOutcome}>{solution.outcome}</p>
+                <h3>{solution.title}</h3>
+                <p className={styles.solutionDescription}>{solution.description}</p>
+                <ul className={styles.solutionFeatures}>
+                  {solution.features.map((feature) => (
+                    <li key={feature}><span>✓</span>{feature}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+
+          <div className={styles.capabilitiesHeader}>
+            <span>Specialized capabilities</span>
+            <p>Focused expertise, coordinated under one technology strategy.</p>
+          </div>
 
           <div className={styles.servicesGrid}>
-            {services.map((service) => (
-              <div className={styles.serviceCard} key={service.title}>
+            {supportingServices.map((service) => (
+              <article className={styles.serviceCard} key={service.title}>
                 <div className={styles.serviceIcon}>{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-              </div>
+                <div>
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </div>
+                <span className={styles.serviceArrow} aria-hidden="true">↗</span>
+              </article>
             ))}
+          </div>
+
+          <div className={styles.servicesFooter}>
+            <div className={styles.serviceFlow} aria-label="Integrated service lifecycle">
+              {['Plan', 'Build', 'Protect', 'Support'].map((step, index) => (
+                <div className={styles.flowStep} key={step}>
+                  <span>0{index + 1}</span>
+                  <strong>{step}</strong>
+                </div>
+              ))}
+            </div>
+            <div className={styles.servicesCta}>
+              <div>
+                <span>Not sure what your business needs?</span>
+                <strong>We&apos;ll help you build the right service plan.</strong>
+              </div>
+              <a href="#contact" className="btn btn-primary">Discuss Your IT Needs <span aria-hidden="true">→</span></a>
+            </div>
           </div>
         </div>
       </section>
@@ -325,7 +473,7 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.footerBottom}>
-          <p>&copy; {new Date().getFullYear()} MULTIZER LLC. All rights reserved.</p>
+          <p>&copy; 2024 MULTIZER LLC. All rights reserved.</p>
         </div>
       </footer>
     </main>
