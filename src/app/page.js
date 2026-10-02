@@ -168,15 +168,13 @@ const highlights = [
 export default function Home() {
   return (
     <main className={styles.container}>
-      <input type="checkbox" id="businessNotice" className={styles.noticeToggle} defaultChecked aria-hidden="true" />
-      <div className={styles.noticeOverlay} role="dialog" aria-modal="true" aria-labelledby="businessNoticeTitle">
-        <section className={styles.noticeDialog}>
+      <aside className={styles.noticeOverlay} aria-labelledby="businessNoticeTitle" aria-describedby="businessNoticeDescription">
+        <div className={styles.noticeDialog}>
           <span className={styles.noticeBadge}>Notice</span>
           <h2 id="businessNoticeTitle">Business operations are currently paused.</h2>
-          <p>We are temporarily not accepting new service requests or responding to inquiries.</p>
-          <label htmlFor="businessNotice" className={styles.noticeClose} aria-label="Close notice">OK</label>
-        </section>
-      </div>
+          <p id="businessNoticeDescription">We are temporarily not accepting new service requests or responding to inquiries.</p>
+        </div>
+      </aside>
 
       <header className={styles.header}>
         <div className={styles.headerInner}>
