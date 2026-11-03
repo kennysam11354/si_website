@@ -13,6 +13,10 @@ export const metadata = {
   title: "CORE ELECTRIC MEP INDUSTRIES | Electrical Contractor",
   description:
     "Electrical contractor serving commercial, residential, and public sector projects across New York.",
+  robots: {
+    index: false,
+    follow: false,
+  },
   alternates: {
     canonical: "/client",
     languages: {
