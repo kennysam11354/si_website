@@ -1,0 +1,51 @@
+import Image from "next/image";
+
+export default function Projects({ dict }) {
+    return (
+        <section id="projects" className="py-24 bg-primary text-white overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                    <div className="max-w-2xl">
+                        <h2 className="text-sm font-bold tracking-widest text-secondary uppercase mb-2">{dict.badge}</h2>
+                        <p className="text-3xl md:text-5xl font-bold">{dict.title}</p>
+                    </div>
+                    <div className="text-gray-400 max-w-sm">
+                        <p>{dict.subtitle}</p>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {dict.list.map((project, index) => (
+                        <div key={index} className="group relative overflow-hidden rounded-xl bg-gray-900 border border-white/10 hover:border-secondary/50 transition-all duration-500">
+                            <div className="aspect-video relative overflow-hidden bg-gray-800 grayscale group-hover:grayscale-0 transition-all duration-700">
+                                <Image
+                                    src={project.image}
+                                    alt={project.title}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </div>
+
+                            <div className="p-8">
+                                <div className="flex justify-between items-start mb-4">
+                                    <span className="text-secondary text-xs font-bold uppercase tracking-widest py-1 border-b border-secondary/30">
+                                        {project.location}
+                                    </span>
+                                </div>
+                                <h3 className="text-2xl font-bold mb-3 group-hover:text-secondary transition-colors truncate">
+                                    {project.title}
+                                </h3>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    {project.description}
+                                </p>
+
+
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
