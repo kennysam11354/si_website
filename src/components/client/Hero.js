@@ -9,6 +9,9 @@ export default function Hero({ dict }) {
     const headlineParts = dict.headline.split("Contractor");
     const highlightsContractor = headlineParts.length === 2;
     const titleWords = highlightsContractor ? headlineParts[0].trim().split(/\s+/) : [];
+    const titleLines = !highlightsContractor
+        ? dict.headline.trim().split("\n").map((line) => line.trim().split(/\s+/))
+        : [];
 
     useEffect(() => {
         const hero = heroRef.current;
@@ -72,7 +75,30 @@ export default function Hero({ dict }) {
                                 </span>
                                 {headlineParts[1]}
                             </>
-                        ) : dict.headline}
+                        ) : (
+                            titleLines.map((line, lineIndex) => {
+                                const priorWords = titleLines
+                                    .slice(0, lineIndex)
+                                    .reduce((count, previousLine) => count + previousLine.length, 0);
+
+                                return (
+                                    <span key={`title-line-${lineIndex}`}>
+                                        {line.map((word, wordIndex) => (
+                                            <span key={`${word}-${wordIndex}`}>
+                                                <span
+                                                    className={`hero-title-word${isHeroVisible ? " is-visible" : ""}`}
+                                                    style={{ animationDelay: `${(priorWords + wordIndex) * 75}ms` }}
+                                                >
+                                                    {word}
+                                                </span>
+                                                {wordIndex < line.length - 1 ? " " : null}
+                                            </span>
+                                        ))}
+                                        {lineIndex < titleLines.length - 1 && <br />}
+                                    </span>
+                                );
+                            })
+                        )}
                     </h1>
 
                     <p className="text-xl md:text-2xl text-gray-300 mb-10 leading-relaxed max-w-2xl">
